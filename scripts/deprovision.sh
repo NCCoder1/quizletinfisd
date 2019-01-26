@@ -75,6 +75,19 @@ fi
 #$gam update user $username suspended on | tee -a /tmp/$username.log
 #echo "Account $username suspendeded" | tee -a /tmp/$username.log
 
+#Set forward?
+echo "Did you want their email forwarded? "
+read emailforward
+if [[ $emailforward =~ [yY] ]]
+then
+		echo "What account should email be forwarded to? "
+		read emailforward
+		echo "Forwarding "$username"'s email"
+		$gam gam user $username add forwardingaddress emailforward | tee -a /tmp/$username.log
+else
+		echo "Not forwarding email" | tee -a /tmp/$username.log
+fi
+
 #Transfer docs to another employee
 echo "Email address to receive Google Drive files: "
 read drivetransfer
@@ -91,8 +104,5 @@ $gam update org Offboarding add users $username
 echo "Hiding $username from the GAL"
 $gam update user $username gal off
 
-## Printing Log location and Upload to logs folder in data.archive@
-#$gam user data.archive@domain.com add drivefile localfile /tmp/$username.log parentid (Drive folder ID here)
 echo "Offboard complete for $username"
-echo "============================================"
-#echo "Log file uploaded to data.archive@ log folder"
+echo "============================================""
