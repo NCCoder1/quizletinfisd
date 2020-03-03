@@ -1,10 +1,11 @@
 #!/bin/bash
 
 CURRENT_USER=$(/usr/bin/python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')
-echo -e "--- Commandline Tools ---\n" | tee $LOG_FILE
 
+echo "#### Preparing Laptop for Quizlet ####"
+
+echo "--- Commandline Tools ---\n"
 os=$(sw_vers -productVersion | awk -F. '{print $1 "." $2}')
-
 # string comparison
 if [[ "$os" == 10.15 ]]; then
 	echo "macOS Catalina"
@@ -18,7 +19,6 @@ if [[ "$os" == 10.15 ]]; then
     	product=$(softwareupdate -l | grep -B 1 -E 'Command Line Tools' | awk -F'*' '/^ *\\*/ {print $2}' | sed -e 's/^ *Label: //' -e 's/^ *//' | sort -V | tail -n1)
     	softwareupdate --verbose --install "${product}" || echo 'Installation failed.' 1>&2 && rm ${in_progress} && echo 'Command-line tools installed.'
 	fi
-
 
 elif [[ "$os" == 10.14 ]]; then
 	echo "macOS High Sierra"
@@ -49,7 +49,7 @@ fi
 sudo mkdir -p /opt/projects
 sudo chown -R $CURRENT_USER /opt/projects
 ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
-sudo ssh-keyscan -t rsa github.com > /etc/ssh/ssh_known_hosts
+sudo ssh-keyscan -t rsa github.com > ~/.ssh/ssh_known_hosts
 echo "##### quizlet-web..."
 cd /opt/projects
 git clone git@github.com:quizlet/quizlet-web.git quizlet
@@ -62,3 +62,6 @@ echo "##### quizlet-workstation..."
 git clone git@github.com:quizlet/quizlet-workstation.git
 
 chown -R $CURRENT_USER /opt/projects
+
+echo "--- Installing Homebrew ---"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
