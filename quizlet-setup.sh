@@ -65,3 +65,18 @@ chown -R $CURRENT_USER /opt/projects
 
 echo "--- Installing Homebrew ---"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install google-chrome
+xattr -rd com.apple.quarantine /Applications/Google\ Chrome.app
+
+sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install 1password
+xattr -rd com.apple.quarantine /Applications/1Password\ 7.app
+
+sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install slack
+xattr -rd com.apple.quarantine /Applications/Slack.app
+
+sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install tunnelblick
+xattr -rd com.apple.quarantine /Applications/Tunnelblick.app
+
+sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install visual-studio-code
+xattr -rd com.apple.quarantine /Applications/Visual\ Studio\ Code.app
