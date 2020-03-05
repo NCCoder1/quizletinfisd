@@ -53,23 +53,21 @@ sudo ssh-keyscan -t rsa github.com > ~/.ssh/ssh_known_hosts
 # Check if SSH is authorized to Github
 if ssh -q git@github.com; [ $? -eq 255 ]; then
    echo "We were not able to successfully connect to Github.  Please fix and rerun script."
-   exit
 else
    # successfully authenticated
+   echo "##### quizlet-web..."
+   cd /opt/projects
+   git clone git@github.com:quizlet/quizlet-web.git quizlet
+
+   echo "##### quizlet-puppet..."
+   git clone git@github.com:quizlet/quizlet-puppet.git
+
+
+   echo "##### quizlet-workstation..."
+   git clone git@github.com:quizlet/quizlet-workstation.git
+
+   chown -R $CURRENT_USER /opt/projects
 fi
-
-echo "##### quizlet-web..."
-cd /opt/projects
-git clone git@github.com:quizlet/quizlet-web.git quizlet
-
-echo "##### quizlet-puppet..."
-git clone git@github.com:quizlet/quizlet-puppet.git
-
-
-echo "##### quizlet-workstation..."
-git clone git@github.com:quizlet/quizlet-workstation.git
-
-chown -R $CURRENT_USER /opt/projects
 
 echo "--- Installing Homebrew ---"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
