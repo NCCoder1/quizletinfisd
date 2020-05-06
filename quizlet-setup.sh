@@ -4,7 +4,7 @@ CURRENT_USER=$(/usr/bin/python -c 'from SystemConfiguration import SCDynamicStor
 
 echo "#### Preparing Laptop for Quizlet ####"
 
-echo "--- Commandline Tools ---\n"
+echo "--- Commandline Tools ---"
 os=$(sw_vers -productVersion | awk -F. '{print $1 "." $2}')
 if [[ "$os" == 10.15 ]]; then
 	echo "macOS Catalina"
