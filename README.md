@@ -1,5 +1,9 @@
 # Quizlet Corporate Access
 
+### Prequisites
+* Invitation to Quizlet Github organization
+* Quizlet Okta account
+
 ### Instructions for use
 1. Ensure standard security practices are in place (encryption, require password after sleep, screensaver enabled => 20 minutes, etc)
 2. Confirm your Github account has been added to the Quizlet organization.
@@ -13,5 +17,7 @@ bash <(curl -Ls https://bit.ly/qz-setup)
 cd /opt/projects/quizlet-workstation/mac/
 ./laptop-setup.sh <quizlet email> <github user name>
 ```
+6. Login to Okta and update the following profile fields (Email 2, Github, Local Username, Public SSH Key)
+
 
 Reference: https://quizlet.atlassian.net/wiki/spaces/QSD/pages/149258429/Setting+up+a+computer+to+access+Quizlet#SettingupacomputertoaccessQuizlet-ManualSetup(withoutJAMF)
