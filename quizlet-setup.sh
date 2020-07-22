@@ -115,3 +115,5 @@ xattr -rd com.apple.quarantine /Applications/Tunnelblick.app
 
 sudo -u "$CURRENT_USER" /usr/local/bin/brew cask install visual-studio-code
 xattr -rd com.apple.quarantine /Applications/Visual\ Studio\ Code.app
+
+echo "ZSH_DISABLE_COMPFIX="true"" >> ~/.zshrc
