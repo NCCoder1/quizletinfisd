@@ -1,4 +1,4 @@
-# Quizlet Corporate/Eng Setup
+# Quizlet Corporate Access
 
 ### Instructions for use
 1. Ensure standard security practices are in place (encryption, require password after sleep, screensaver enabled => 20 minutes, etc)
