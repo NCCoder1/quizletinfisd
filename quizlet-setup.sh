@@ -58,6 +58,7 @@ sudo ssh-keyscan -t rsa github.com > ~/.ssh/ssh_known_hosts
 # Check if SSH is authorized to Github
 if ssh -q git@github.com; [ $? -eq 255 ]; then
 	echo "We were not able to successfully connect to Github.  Please fix and rerun script."
+	exit
 else
 	# successfully authenticated
 	if [ -d "/opt/projects/quizlet" ]; then
