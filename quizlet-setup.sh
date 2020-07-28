@@ -104,17 +104,17 @@ else
 fi
 
 if [[ $(command -v brew) == "" ]]; then
-    echo "##### Installing Hombrew"
+    echo "##### Installing Hombrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 else
-    echo "##### Updating Homebrew"
+    echo "##### Updating Homebrew..."
     brew update
 fi
 
 read -p "Are you a Contractor? [y/n]: " contractor
 if [[ $contractor =~ [yY] ]]
 then
-	echo "##### Installing default applications"
+	echo "##### Installing default applications..."
 	/usr/local/bin/brew cask install google-chrome
 	/usr/local/bin/brew cask install firefox
 	/usr/local/bin/brew cask install 1password
