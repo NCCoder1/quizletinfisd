@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CURRENT_USER=$(/usr/bin/python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')
+echo ""
 echo " #####################################"
 echo "####                               ####"
 echo "####   Downloading Quizlet Repos   ####"
@@ -51,7 +52,6 @@ else
 fi # Commandline Tools complete
 
 ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
-sudo ssh-keyscan -t rsa github.com > ~/.ssh/ssh_known_hosts
 
 # Check if SSH is authorized to Github
 if ssh -q git@github.com; [ $? -eq 255 ]; then
@@ -101,4 +101,20 @@ else
 		git clone git@github.com:quizlet/quizlet-workstation.git
 	fi
    chown -R $CURRENT_USER /opt/projects
+fi
+
+read -p "Are you a Contractor? [y/n]: " contractor
+if [[ $contractor =~ [yY] ]]
+then
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	/usr/local/bin/brew cask install google-chrome
+	/usr/local/bin/brew cask install firefox
+	/usr/local/bin/brew cask install 1password
+	/usr/local/bin/brew cask install slack
+	/usr/local/bin/brew cask install tunnelblick
+	/usr/local/bin/brew cask install atom
+	/usr/local/bin/brew cask install visual-studio-code
+	/usr/local/bin/brew cask install vlc
+	/usr/local/bin/brew cask install google-backup-and-sync
+	/usr/local/bin/brew install mas
 fi
