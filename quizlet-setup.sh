@@ -103,10 +103,18 @@ else
    chown -R $CURRENT_USER /opt/projects
 fi
 
+if [[ $(command -v brew) == "" ]]; then
+    echo "##### Installing Hombrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+else
+    echo "##### Updating Homebrew"
+    brew update
+fi
+
 read -p "Are you a Contractor? [y/n]: " contractor
 if [[ $contractor =~ [yY] ]]
 then
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	echo "##### Installing default applications"
 	/usr/local/bin/brew cask install google-chrome
 	/usr/local/bin/brew cask install firefox
 	/usr/local/bin/brew cask install 1password
