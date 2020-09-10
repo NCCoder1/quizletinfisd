@@ -126,3 +126,6 @@ then
 	/usr/local/bin/brew cask install google-backup-and-sync
 	/usr/local/bin/brew install mas
 fi
+
+echo "Now you need to run the below command to install our devtools..."
+echo "/opt/projects/quizlet-workstation/mac/laptop-setup.sh <<email_address>> <<github_username>>"
