@@ -12,37 +12,38 @@ sleep 3
 echo ""
 echo ""
 
-# Commandline Tools
-os=$(sw_vers -productVersion | awk -F. '{print $1 "." $2}')
-if [[ "$os" == 10.15 ]]; then
-	echo "macOS Catalina confirmed"
-    if softwareupdate --history | grep --silent "Command Line Tools.*"; then
-		echo 'Command-line tools already installed.'
-	else
-		echo ""
-		echo '##### Installing Command-line tools...'
-    	in_progress=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-    	touch ${in_progress}
-    	product=$(softwareupdate -l | grep -B 1 -E 'Command Line Tools' | awk -F'*' '/^ *\\*/ {print $2}' | sed -e 's/^ *Label: //' -e 's/^ *//' | sort -V | tail -n1)
-    	softwareupdate --verbose --install "${product}" || echo 'Installation failed.' 1>&2 && rm ${in_progress} && echo 'Command-line tools installed.'
-	fi
+os_major=$(sw_vers -productVersion | awk -F. '{print $1}')
+os_minor=$(sw_vers -productVersion | awk -F. '{print $2}')
 
-elif [[ "$os" == 10.14 ]]; then
-	echo "macOS Mojave confirmed"
-    if softwareupdate --history | grep --silent "Command Line Tools.*${os}"; then
-		echo 'Command-line tools already installed.'
-	else
-		echo ""
-		echo '##### Installing Command-line tools...'
-    	in_progress=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-    	touch ${in_progress}
-    	product=$(softwareupdate --list | awk "/\* Command Line.*${os}/ { sub(/^   \* /, \"\"); print }")
-    	softwareupdate --verbose --install "${product}" || echo 'Installation failed.' 1>&2 && rm ${in_progress} && echo 'Command-line tools installed.'
-	fi
-else
-	echo "You are running an unsupported version of MacOS.  Please use the latest official version of MacOS to continue."
-	exit 1
-fi
+if [ $os_major == 11 ] || [ $os_minor -ge 14 ]; then
+  # Catalina and newer. Big Sur will most likely be MacOS 11.  Add an arguement if the process changes
+  echo "macOS Mojave or newer"
+  if softwareupdate --history | grep --silent "Command Line Tools.*"; then
+      echo 'Command-line tools already installed.'
+  else
+      echo ""
+      echo '##### Installing XCode Command-line tools...'
+      in_progress=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+      touch ${in_progress}
+      product=$(softwareupdate -l | grep -B 1 -E 'Command Line Tools' | awk -F'*' '/^ *\\*/ {print $2}' | sed -e 's/^ *Label: //' -e 's/^ *//' | sort -V | tail -n1)
+      softwareupdate --verbose --install "${product}" || echo 'Installation failed.' 1>&2 && rm ${in_progress} && echo 'Command-line tools installed.'
+  fi
+elif [ $os_major == 10 ] && [ $os_minor == 13 ]; then
+  echo "macOS High Sierra"
+  if softwareupdate --history | grep --silent "Command Line Tools.*${os}"; then
+      echo 'Command-line tools already installed.'
+  else
+      echo ""
+      echo '##### Installing XCode Command-line tools...'
+      in_progress=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+      touch ${in_progress}
+      product=$(softwareupdate --list | awk "/\* Command Line.*${os}/ { sub(/^   \* /, \"\"); print }")
+      softwareupdate --verbose --install "${product}" || echo 'Installation failed.' 1>&2 && rm ${in_progress} && echo 'Command-line tools installed.'
+  fi
+elif [ $os_major == 10 ] && [ $os_minor -le 12 ]; then
+  echo "Mac OS X 10.12 or earlier is not supported at Quizlet.  Please update your OS to continue."
+  exit 1
+fi # Commandline Tools complete
 
 # Homebrew
 if [[ $(command -v brew) == "" ]]; then
