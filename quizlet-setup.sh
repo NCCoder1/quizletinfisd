@@ -58,7 +58,7 @@ echo "##### Installing default applications..."
 /usr/local/bin/brew cask install google-chrome
 /usr/local/bin/brew cask install firefox
 /usr/local/bin/brew cask install 1password
-/usr/local/bin/brew cask install slackit
+/usr/local/bin/brew cask install slack
 /usr/local/bin/brew cask install atom
 /usr/local/bin/brew cask install visual-studio-code
 
