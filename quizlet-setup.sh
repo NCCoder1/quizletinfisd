@@ -55,12 +55,12 @@ else
 fi
 
 echo "##### Installing default applications..."
-/usr/local/bin/brew cask install google-chrome
-/usr/local/bin/brew cask install firefox
-/usr/local/bin/brew cask install 1password
-/usr/local/bin/brew cask install slack
-/usr/local/bin/brew cask install atom
-/usr/local/bin/brew cask install visual-studio-code
+/usr/local/bin/brew install --cask google-chrome
+/usr/local/bin/brew install --cask firefox
+/usr/local/bin/brew install --cask 1password
+/usr/local/bin/brew install --cask slack
+/usr/local/bin/brew install --cask atom
+/usr/local/bin/brew install --cask visual-studio-code
 
 ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
 
